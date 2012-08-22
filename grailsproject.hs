@@ -27,10 +27,9 @@ depBlock = do
   symbol braceL
   manyTill anyChar (try (symbol braceR))
 
-depString  = between singleQuote singleQuote depSpec
-             <|> between doubleQuote doubleQuote depSpec
+depString = quoted depSpec
 
-depSpec    = do
+depSpec   = do
   optional groupId
   colon
   a <- artifactId
@@ -38,17 +37,20 @@ depSpec    = do
   v <- version
   return (a, v)
 
-scope          = many1 letter
-groupId        = identifier
-artifactId     = identifier
-version        = identifier
-identifier     = many1 (alphaNum <|> oneOf "_-.")
+scope      = many1 letter
+groupId    = identifier
+artifactId = identifier
+version    = identifier
+identifier = many1 (alphaNum <|> oneOf "_-.")
 
 symbol p = do
   spaces
   v <- p
   spaces
   return v
+
+quoted p = between singleQuote singleQuote p
+            <|> between doubleQuote doubleQuote p
 
 parenL      = char '('
 parenR      = char ')'
