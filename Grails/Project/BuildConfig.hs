@@ -1,3 +1,5 @@
+module Grails.Project.BuildConfig ( onlyPlugins ) where
+
 import Text.ParserCombinators.Parsec
 
 onlyPlugins :: Parser [(String,String)]
