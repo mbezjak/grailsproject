@@ -1,7 +1,7 @@
 This project is still in development. When completed it will be capable of
 showing:
 
- * directory name
+ * project directory in ~/.grails
  * project/plugin name
  * project/plugin version
  * grails version
