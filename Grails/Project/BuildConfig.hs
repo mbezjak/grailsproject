@@ -43,7 +43,7 @@ scope      = many1 letter
 groupId    = identifier
 artifactId = identifier
 version    = identifier
-identifier = many1 (alphaNum <|> oneOf "_-.")
+identifier = many1 (alphaNum <|> oneOf "_-.$")
 
 symbol p = do
   spaces
