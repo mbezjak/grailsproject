@@ -1,3 +1,8 @@
+# grailsproject
+Provide information about a grails project.
+
+[![Build Status](https://secure.travis-ci.org/mbezjak/grailsproject.png?branch=master)](http://travis-ci.org/mbezjak/grailsproject)
+
 This project is still in development. When completed it will be capable of
 showing:
 
