@@ -1,0 +1,16 @@
+name:                grailsproject
+version:             0.1
+synopsis:            Provide information about a grails project.
+homepage:            https://github.com/mbezjak/grailsproject
+license:             MIT
+license-file:        LICENSE
+author:              Miro Bezjak
+maintainer:          bezjak.miro@gmail.com
+category:            Development
+build-type:          Simple
+cabal-version:       >=1.8
+
+executable grailsproject
+  main-is:           Grails/Project/Main.hs
+  build-depends:     base ==4.5.*, parsec ==3.1.*
+  ghc-options:       -main-is Grails.Project.Main
