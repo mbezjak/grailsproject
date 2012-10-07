@@ -1,4 +1,4 @@
-module Tests.BuildConfig (parserForBuildConfig) where
+module Tests.BuildConfig (tests) where
 
 import Test.Framework (testGroup)
 import Test.Framework.Providers.HUnit
@@ -9,7 +9,7 @@ import Text.ParserCombinators.Parsec
 import Grails.Project.BuildConfig
 
 
-parserForBuildConfig =
+tests =
   testGroup "Parser for BuildConfig.groovy" [
       testParser "no-plugins" [],
       testParser "empty-plugins" [],
