@@ -3,11 +3,9 @@ module Grails.Project.BuildConfig ( onlyPlugins ) where
 import Text.ParserCombinators.Parsec
 
 onlyPlugins :: Parser [(String,String)]
-onlyPlugins = do
-  manyTill anyChar (lookAhead $ try plugins)
-  ps <- plugins
-  many anyChar
-  return ps
+onlyPlugins = try plugins
+              <|> (anyToken >> onlyPlugins)
+              <|> return []
 
 plugins = do
   symbol $ string "plugins"
