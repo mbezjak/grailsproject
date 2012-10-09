@@ -21,5 +21,9 @@ Information will be printed in a way to allow easy command line processing
       echo 'project is not built with grails 2.x'
     fi
 
-## License
-Project uses MIT license. Check LICENSE file for more info.
+## Further Resources
+
+ * Homepage:       https://github.com/mbezjak/grailsproject
+ * Issue tracker:  https://github.com/mbezjak/grailsproject/issues
+ * CI server:      http://travis-ci.org/mbezjak/grailsproject
+ * License:        MIT (see LICENSE file)
