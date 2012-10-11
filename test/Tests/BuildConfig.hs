@@ -13,8 +13,8 @@ tests =
   testGroup "Parser for BuildConfig.groovy" [
       testParser "no-plugins" [],
       testParser "empty-plugins" [],
-      testParser "one-plugin" [("codenarc", "0.17")],
-      testParser "multiple-plugins" multiplePlugins,
+      testParser "one" [("codenarc", "0.17")],
+      testParser "multiple" multiplePlugins,
       testParser "nested-blocks" nestedBlocksPlugins,
       testParser "version-string" versionStringPlugins
     ]
@@ -24,7 +24,7 @@ testParser example expected =
 
 plugins example = parseFromFile onlyPlugins (buildConfig example)
 
-buildConfig name = "test/BuildConfig-" ++ name ++ ".groovy"
+buildConfig = ("test/resource/buildconfig/"++)
 
 multiplePlugins = [
     ("codenarc"              , "0.17"),
