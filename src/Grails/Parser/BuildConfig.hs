@@ -1,6 +1,7 @@
 module Grails.Parser.BuildConfig ( onlyPlugins ) where
 
 import Text.ParserCombinators.Parsec
+import Grails.Parser.Common
 
 onlyPlugins :: Parser [(String,String)]
 onlyPlugins = try plugins
@@ -42,21 +43,3 @@ groupId    = identifier
 artifactId = identifier
 version    = identifier
 identifier = many1 (alphaNum <|> oneOf "_-.$")
-
-symbol p = do
-  spaces
-  v <- p
-  spaces
-  return v
-
-quoted p = between singleQuote singleQuote p
-            <|> between doubleQuote doubleQuote p
-
-parenL      = char '('
-parenR      = char ')'
-braceL      = char '{'
-braceR      = char '}'
-comma       = char ','
-colon       = char ':'
-singleQuote = char '\''
-doubleQuote = char '"'
