@@ -1,5 +1,5 @@
-import Grails.Project.Parser.BuildConfig
-import Grails.Project.Output
+import Grails.Parser.BuildConfig
+import Grails.Output
 import Text.ParserCombinators.Parsec
 
 parseBuildConfig :: IO (Either ParseError [(String, String)])

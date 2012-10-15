@@ -1,4 +1,4 @@
-module Grails.Project.Output where
+module Grails.Output where
 
 printPlugins :: [(String, String)] -> IO ()
 printPlugins = mapM_ printPlugin . table

@@ -6,7 +6,7 @@ import Test.Framework.Providers.HUnit
 import Test.HUnit
 
 import Text.ParserCombinators.Parsec
-import Grails.Project.Parser.BuildConfig
+import Grails.Parser.BuildConfig
 
 
 tests =

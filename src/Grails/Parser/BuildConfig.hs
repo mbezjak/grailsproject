@@ -1,4 +1,4 @@
-module Grails.Project.Parser.BuildConfig ( onlyPlugins ) where
+module Grails.Parser.BuildConfig ( onlyPlugins ) where
 
 import Text.ParserCombinators.Parsec
 
