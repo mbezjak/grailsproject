@@ -1,4 +1,4 @@
-module Tests.BuildConfig (tests) where
+module Tests.Parser.BuildConfig (tests) where
 
 import Test.Framework (testGroup)
 import Test.Framework.Providers.HUnit
@@ -6,7 +6,7 @@ import Test.Framework.Providers.HUnit
 import Test.HUnit
 
 import Text.ParserCombinators.Parsec
-import Grails.Project.BuildConfig
+import Grails.Project.Parser.BuildConfig
 
 
 tests =

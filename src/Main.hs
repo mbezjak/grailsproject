@@ -1,4 +1,4 @@
-import Grails.Project.BuildConfig
+import Grails.Project.Parser.BuildConfig
 import Grails.Project.Output
 import Text.ParserCombinators.Parsec
 
