@@ -15,9 +15,8 @@ extra-source-files:  README.md
 
 executable grailsproject
   hs-source-dirs:    src
-  main-is:           Grails/Project/Main.hs
+  main-is:           Main.hs
   build-depends:     base <5, parsec ==3.1.*
-  ghc-options:       -main-is Grails.Project.Main
 
 test-suite test
   type:              exitcode-stdio-1.0
