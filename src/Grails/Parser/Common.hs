@@ -13,6 +13,9 @@ quoted   :: Parser a -> Parser a
 quoted p = between singleQuote singleQuote p
             <|> between doubleQuote doubleQuote p
 
+eol         :: Parser String
+eol         = string "\r\n" <|> string "\n\r" <|> string "\n"
+
 parenL      :: Parser Char
 parenL      = char '('
 
@@ -30,6 +33,9 @@ comma       = char ','
 
 colon       :: Parser Char
 colon       = char ':'
+
+hash        :: Parser Char
+hash        = char '#'
 
 singleQuote :: Parser Char
 singleQuote = char '\''
