@@ -1,8 +1,7 @@
-a 1
-b:2
-c : 3
-d=4
-e = 5
+a:1
+b : 2
+c=3
+d = 4
 
 keys.with.dots.are.common = As are values with spaces
 empty.value=

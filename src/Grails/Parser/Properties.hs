@@ -4,17 +4,31 @@ import Text.ParserCombinators.Parsec
 import Grails.Parser.Common
 
 properties :: Parser [(String,String)]
-properties = fmap (\x -> [x]) line
+properties = many (try onlyProperty)
 
-line = do
-  key <- manyTill anyChar (try separator)
-  separator
-  value <- manyTill anyChar (try eol)
-  return (key, value)
+onlyProperty = do
+  skipMany eol
+  skipMany comment
+  skipMany eol
+  p <- property
+  skipMany eol
+  skipMany comment
+  skipMany eol
+  return p
+
+property = do
+  k <- key
+  symbol separator
+  v <- value
+  return (k, v)
 
 comment = do
-  hash
-  manyTill anyChar (try eol)
+  symbol hash
+  manyTill anyChar (try end)
   return ()
 
-separator = oneOf " =:"
+key   = many1 (alphaNum <|> oneOf "_-.")
+value = manyTill anyChar (try end)
+
+separator = oneOf "=:"
+end = eol <|> eof

@@ -13,8 +13,11 @@ quoted   :: Parser a -> Parser a
 quoted p = between singleQuote singleQuote p
             <|> between doubleQuote doubleQuote p
 
-eol         :: Parser String
-eol         = string "\r\n" <|> string "\n\r" <|> string "\n"
+eol         :: Parser ()
+eol         = (try (string "\r\n")
+              <|> try (string "\n\r")
+              <|> string "\n"
+              <|> string "\r") >> return ()
 
 parenL      :: Parser Char
 parenL      = char '('
