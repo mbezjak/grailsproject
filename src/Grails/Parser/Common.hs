@@ -37,6 +37,9 @@ comma       = char ','
 colon       :: Parser Char
 colon       = char ':'
 
+equal       :: Parser Char
+equal       = char '='
+
 hash        :: Parser Char
 hash        = char '#'
 

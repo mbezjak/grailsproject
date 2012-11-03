@@ -30,5 +30,5 @@ comment = do
 key   = many1 (alphaNum <|> oneOf "_-.")
 value = manyTill anyChar (try end)
 
-separator = oneOf "=:"
-end = eol <|> eof
+separator = equal <|> colon
+end       = eol <|> eof
