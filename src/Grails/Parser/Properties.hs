@@ -7,14 +7,15 @@ properties :: Parser [(String,String)]
 properties = many (try onlyProperty)
 
 onlyProperty = do
-  skipMany eol
-  skipMany comment
-  skipMany eol
+  ignored
   p <- property
+  ignored
+  return p
+
+ignored = do
   skipMany eol
   skipMany comment
   skipMany eol
-  return p
 
 property = do
   k <- key
