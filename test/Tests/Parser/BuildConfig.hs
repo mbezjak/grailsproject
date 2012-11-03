@@ -2,8 +2,8 @@ module Tests.Parser.BuildConfig (tests) where
 
 import Test.Framework (testGroup)
 import Test.Framework.Providers.HUnit
-
 import Test.HUnit
+import Tests.Parser.Support
 
 import Text.ParserCombinators.Parsec
 import Grails.Parser.BuildConfig
@@ -11,22 +11,21 @@ import Grails.Parser.BuildConfig
 
 tests =
   testGroup "Parser for BuildConfig.groovy" [
-      testParser "no-plugins" [],
-      testParser "empty-plugins" [],
-      testParser "one" [("codenarc", "0.17")],
-      testParser "multiple" multiplePlugins,
-      testParser "nested-blocks" nestedBlocksPlugins,
-      testParser "version-string" versionStringPlugins
+      testNoPlugins,
+      testEmptyPlugins,
+      testOne,
+      testMultiple,
+      testNestedBlocks,
+      testVersionString
     ]
 
-testParser example expected =
-  testCase example $ assertParser (plugins example) expected
+testNoPlugins = testBuildConfig "no-plugins" []
 
-plugins example = parseFromFile onlyPlugins (buildConfig example)
+testEmptyPlugins = testBuildConfig "empty-plugins" []
 
-buildConfig = ("test/resource/buildconfig/"++)
+testOne = testBuildConfig "one" [("codenarc", "0.17")]
 
-multiplePlugins = [
+testMultiple = testBuildConfig "multiple" [
     ("codenarc"              , "0.17"),
     ("hibernate"             , "1.3.7"),
     ("tomcat"                , "1.3.7"),
@@ -34,7 +33,7 @@ multiplePlugins = [
     ("rollback-on-exception" , "0.1")
   ]
 
-nestedBlocksPlugins = [
+testNestedBlocks = testBuildConfig "nested-blocks" [
     ("codenarc"              , "0.17"),
     ("spock-core"            , "0.5-groovy-1.8"),
     ("hibernate"             , "1.3.7"),
@@ -43,7 +42,7 @@ nestedBlocksPlugins = [
     ("rollback-on-exception" , "0.1")
   ]
 
-versionStringPlugins = [
+testVersionString = testBuildConfig "version-string" [
     ("codenarc"              , "latest.integration"),
     ("hibernate"             , "$grailsVersion"),
     ("tomcat"                , "$grailsVersion"),
@@ -51,8 +50,4 @@ versionStringPlugins = [
     ("rollback-on-exception" , "latest.release")
   ]
 
-assertParser parser expected = do
-  result <- parser
-  case result of
-    Left err -> assertFailure (show err)
-    Right xs -> xs @?= expected
+testBuildConfig = testParser onlyPlugins "buildconfig"

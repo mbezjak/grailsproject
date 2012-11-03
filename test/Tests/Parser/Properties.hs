@@ -2,8 +2,8 @@ module Tests.Parser.Properties (tests) where
 
 import Test.Framework (testGroup)
 import Test.Framework.Providers.HUnit
-
 import Test.HUnit
+import Tests.Parser.Support
 
 import Text.ParserCombinators.Parsec
 import Grails.Parser.Properties
@@ -11,20 +11,17 @@ import Grails.Parser.Properties
 
 tests =
   testGroup "Parser for *.properties file" [
-      testParser "empty" [],
-      testParser "only-comments" [],
-      testParser "proper" proper,
-      testParser "application" application
+      testEmpty,
+      testOnlyComments,
+      testProper,
+      testApplication
     ]
 
-testParser example expected =
-  testCase example $ assertParser (propertiesFile example) expected
+testEmpty = testProperties "empty" []
 
-propertiesFile example = parseFromFile properties (propertiesFileName example)
+testOnlyComments = testProperties "only-comments" []
 
-propertiesFileName = ("test/resource/properties/"++)
-
-proper = [
+testProper = testProperties "proper" [
     ("a" , "1"),
     ("b" , "2"),
     ("c" , "3"),
@@ -33,14 +30,10 @@ proper = [
     ("empty.value", "")
   ]
 
-application = [
+testApplication = testProperties "application" [
     ("app.grails.version", "1.3.4"),
     ("app.name", "rollback-on-exception"),
     ("plugins.spock", "0.5-groovy-1.7")
   ]
 
-assertParser parser expected = do
-  result <- parser
-  case result of
-    Left err -> assertFailure (show err)
-    Right xs -> xs @?= expected
+testProperties = testParser properties "properties"
