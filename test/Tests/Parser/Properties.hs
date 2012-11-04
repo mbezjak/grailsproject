@@ -1,14 +1,15 @@
 module Tests.Parser.Properties (tests) where
 
-import Test.Framework (testGroup)
+import Test.Framework (Test, testGroup)
 import Test.Framework.Providers.HUnit
-import Test.HUnit
+import Test.HUnit hiding (Test)
 import Tests.Parser.Support
 
 import Text.ParserCombinators.Parsec
 import Grails.Parser.Properties
 
 
+tests :: Test
 tests =
   testGroup "Parser for *.properties file" [
       testEmpty,
@@ -17,10 +18,13 @@ tests =
       testApplication
     ]
 
+testEmpty :: Test
 testEmpty = testProperties "empty" []
 
+testOnlyComments :: Test
 testOnlyComments = testProperties "only-comments" []
 
+testProper :: Test
 testProper = testProperties "proper" [
     ("a" , "1"),
     ("b" , "2"),
@@ -30,10 +34,12 @@ testProper = testProperties "proper" [
     ("empty.value", "")
   ]
 
+testApplication :: Test
 testApplication = testProperties "application" [
     ("app.grails.version", "1.3.4"),
     ("app.name", "rollback-on-exception"),
     ("plugins.spock", "0.5-groovy-1.7")
   ]
 
+testProperties :: String -> [(String,String)] -> Test
 testProperties = testParser properties "properties"
