@@ -1,0 +1,11 @@
+class FooGrailsPlugin {
+
+    def version = "1.4.7-rc1"
+    def grailsVersion = "1.3.2 > *"
+
+    def title = "Simple example"
+    def description = '''\\
+Simple plugin descriptor example.
+'''
+
+}
