@@ -1,6 +1,8 @@
 module Grails.Output where
 
-printPlugins :: [(String, String)] -> IO ()
+import Grails.Types
+
+printPlugins :: Plugins -> IO ()
 printPlugins = mapM_ printPlugin . table
 
 printPlugin :: String -> IO ()

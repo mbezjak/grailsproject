@@ -1,8 +1,9 @@
-import Grails.Parser.BuildConfig
+import Grails.Types
 import Grails.Output
+import Grails.Parser.BuildConfig
 import Text.ParserCombinators.Parsec
 
-parseBuildConfig :: IO (Either ParseError [(String, String)])
+parseBuildConfig :: IO (Either ParseError Plugins)
 parseBuildConfig = parseFromFile onlyPlugins "grails-app/conf/BuildConfig.groovy"
 
 main :: IO ()

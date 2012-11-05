@@ -2,8 +2,9 @@ module Grails.Parser.BuildConfig ( onlyPlugins ) where
 
 import Text.ParserCombinators.Parsec
 import Grails.Parser.Common
+import Grails.Types
 
-onlyPlugins :: Parser [(String,String)]
+onlyPlugins :: Parser Plugins
 onlyPlugins = try plugins
               <|> (anyToken >> onlyPlugins)
               <|> return []

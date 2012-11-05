@@ -7,6 +7,7 @@ import Tests.Parser.Support
 
 import Text.ParserCombinators.Parsec
 import Grails.Parser.Properties
+import Grails.Types
 
 
 tests :: Test
@@ -41,5 +42,5 @@ testApplication = testProperties "application" [
     ("plugins.spock", "0.5-groovy-1.7")
   ]
 
-testProperties :: String -> [(String,String)] -> Test
+testProperties :: String -> Properties -> Test
 testProperties = testParser properties "properties"

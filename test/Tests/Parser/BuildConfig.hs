@@ -7,6 +7,7 @@ import Tests.Parser.Support
 
 import Text.ParserCombinators.Parsec
 import Grails.Parser.BuildConfig
+import Grails.Types
 
 
 tests :: Test
@@ -57,5 +58,5 @@ testVersionString = testBuildConfig "version-string" [
     ("rollback-on-exception" , "latest.release")
   ]
 
-testBuildConfig :: String -> [(String,String)] -> Test
+testBuildConfig :: String -> Plugins -> Test
 testBuildConfig = testParser onlyPlugins "buildconfig"

@@ -2,8 +2,9 @@ module Grails.Parser.Properties ( properties ) where
 
 import Text.ParserCombinators.Parsec
 import Grails.Parser.Common
+import Grails.Types
 
-properties :: Parser [(String,String)]
+properties :: Parser Properties
 properties = many (try onlyProperty)
 
 onlyProperty = do
