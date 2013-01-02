@@ -1,8 +1,11 @@
-module Grails.Parser.BuildConfig ( onlyPlugins ) where
+module Grails.Parser.BuildConfig ( parse ) where
 
-import Text.ParserCombinators.Parsec
+import Text.ParserCombinators.Parsec hiding (parse)
 import Grails.Parser.Common
-import Grails.Types
+import Grails.Types (EIO, Plugins)
+
+parse :: FilePath -> EIO Plugins
+parse = parseFile onlyPlugins
 
 onlyPlugins :: Parser Plugins
 onlyPlugins = try plugins

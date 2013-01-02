@@ -1,8 +1,11 @@
-module Grails.Parser.Properties ( properties ) where
+module Grails.Parser.Properties ( parse ) where
 
-import Text.ParserCombinators.Parsec
+import Text.ParserCombinators.Parsec hiding (parse)
 import Grails.Parser.Common
-import Grails.Types
+import Grails.Types (EIO, Properties)
+
+parse :: FilePath -> EIO Properties
+parse = parseFile properties
 
 properties :: Parser Properties
 properties = many (try onlyProperty)

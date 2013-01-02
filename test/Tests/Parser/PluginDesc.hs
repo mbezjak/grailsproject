@@ -5,7 +5,6 @@ import Test.Framework.Providers.HUnit
 import Test.HUnit hiding (Test)
 import Tests.Parser.Support
 
-import Text.ParserCombinators.Parsec
 import Grails.Parser.PluginDesc
 
 
@@ -17,4 +16,4 @@ testSimple :: Test
 testSimple = testPluginDesc "simple" "1.4.7-rc1"
 
 testPluginDesc :: String -> String -> Test
-testPluginDesc = testParser onlyVersion "plugindesc"
+testPluginDesc = testParser parse "plugindesc"

@@ -1,7 +1,11 @@
-module Grails.Parser.PluginDesc ( onlyVersion ) where
+module Grails.Parser.PluginDesc ( parse ) where
 
-import Text.ParserCombinators.Parsec
+import Text.ParserCombinators.Parsec hiding (parse)
 import Grails.Parser.Common
+import Grails.Types (EIO)
+
+parse :: FilePath -> EIO String
+parse = parseFile onlyVersion
 
 onlyVersion :: Parser String
 onlyVersion = try defVersion

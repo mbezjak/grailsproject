@@ -1,6 +1,14 @@
 module Grails.Parser.Common where
 
 import Text.ParserCombinators.Parsec
+import Control.Monad.Error (ErrorT(..))
+import Grails.Types        (EIO)
+
+parseFile :: Parser a -> FilePath -> EIO a
+parseFile p = ErrorT . fmap left2str . parseFromFile p
+  where
+    left2str (Left err) = Left (show err)
+    left2str (Right a)  = Right a
 
 symbol   :: Parser a -> Parser a
 symbol p = do

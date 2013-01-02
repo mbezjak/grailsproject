@@ -5,7 +5,6 @@ import Test.Framework.Providers.HUnit
 import Test.HUnit hiding (Test)
 import Tests.Parser.Support
 
-import Text.ParserCombinators.Parsec
 import Grails.Parser.Properties
 import Grails.Types
 
@@ -43,4 +42,4 @@ testApplication = testProperties "application" [
   ]
 
 testProperties :: String -> Properties -> Test
-testProperties = testParser properties "properties"
+testProperties = testParser parse "properties"

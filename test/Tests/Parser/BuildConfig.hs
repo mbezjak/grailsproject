@@ -1,11 +1,10 @@
 module Tests.Parser.BuildConfig (tests) where
 
-import Test.Framework (Test, testGroup)
+import Test.Framework    (Test, testGroup)
 import Test.Framework.Providers.HUnit
 import Test.HUnit hiding (Test)
 import Tests.Parser.Support
 
-import Text.ParserCombinators.Parsec
 import Grails.Parser.BuildConfig
 import Grails.Types
 
@@ -59,4 +58,4 @@ testVersionString = testBuildConfig "version-string" [
   ]
 
 testBuildConfig :: String -> Plugins -> Test
-testBuildConfig = testParser onlyPlugins "buildconfig"
+testBuildConfig = testParser parse "buildconfig"
