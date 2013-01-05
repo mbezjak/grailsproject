@@ -1,15 +1,11 @@
 import Control.Monad.Error (runErrorT)
 
-import Grails.Types
-import Grails.Output
-import Grails.Parser.BuildConfig
-
-parseBuildConfig :: EIO Plugins
-parseBuildConfig = parse "grails-app/conf/BuildConfig.groovy"
+import Grails.Project (detect)
+import Grails.Output  (printApp)
 
 main :: IO ()
 main = do
-  result <- runErrorT parseBuildConfig
+  result <- runErrorT detect
   case result of
-    Left err -> print err
-    Right xs -> printPlugins xs
+    Left err  -> print err
+    Right app -> printApp app

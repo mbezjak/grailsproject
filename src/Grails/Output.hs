@@ -1,6 +1,15 @@
-module Grails.Output where
+module Grails.Output ( printApp ) where
 
-import Grails.Types
+import Grails.Types (Plugins, App(..))
+
+printApp :: App -> IO ()
+printApp (App plugins mver) = do
+  case mver of
+    Just ver -> putStrLn ("version " ++ ver)
+    Nothing  -> return ()
+
+  printPlugins plugins
+
 
 printPlugins :: Plugins -> IO ()
 printPlugins = mapM_ printPlugin . table
