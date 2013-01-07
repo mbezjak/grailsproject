@@ -3,11 +3,8 @@ module Grails.Output ( printApp ) where
 import Grails.Types (Plugins, App(..))
 
 printApp :: App -> IO ()
-printApp (App plugins mver) = do
-  case mver of
-    Just ver -> putStrLn ("version " ++ ver)
-    Nothing  -> return ()
-
+printApp (App plugins version) = do
+  putStrLn ("version " ++ version)
   printPlugins plugins
 
 
