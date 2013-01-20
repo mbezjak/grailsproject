@@ -17,7 +17,11 @@ tests =
       testOne,
       testMultiple,
       testNestedBlocks,
-      testVersionString
+      testVersionString,
+      testLineComment,
+      testBlockComment,
+      testDefaultApp22,
+      testDefaultPlugin22
     ]
 
 testNoPlugins :: Test
@@ -55,6 +59,29 @@ testVersionString = testBuildConfig "version-string" [
     ("tomcat"                , "$grailsVersion"),
     ("quartz"                , "0.4.2"),
     ("rollback-on-exception" , "latest.release")
+  ]
+
+testLineComment :: Test
+testLineComment = testBuildConfig "line-comment" [("resources", "1.1.6")]
+
+testBlockComment :: Test
+testBlockComment = testBuildConfig "block-comment" [("resources", "1.1.6")]
+
+testDefaultApp22 :: Test
+testDefaultApp22 = testBuildConfig "default-app-2.2" [
+    ("hibernate"             , "$grailsVersion"),
+    ("jquery"                , "1.8.3"),
+    ("resources"             , "1.1.6"),
+    ("tomcat"                , "$grailsVersion"),
+    ("database-migration"    , "1.2.1"),
+    ("cache"                 , "1.0.1")
+  ]
+
+testDefaultPlugin22 :: Test
+testDefaultPlugin22 = testBuildConfig "default-plugin-2.2" [
+    ("tomcat"              , "$grailsVersion"),
+    ("release"             , "2.2.0"),
+    ("rest-client-builder" , "1.0.3")
   ]
 
 testBuildConfig :: String -> Plugins -> Test

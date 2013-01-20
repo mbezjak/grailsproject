@@ -1,7 +1,9 @@
 module Grails.Parser.BuildConfig ( parse ) where
 
-import Text.ParserCombinators.Parsec hiding (parse)
-import Grails.Parser.Common
+import Text.ParserCombinators.Parsec   hiding (parse)
+import qualified Text.ParserCombinators.Parsec.Token as T
+import Text.ParserCombinators.Parsec.Language (javaStyle)
+import Grails.Parser.Common            hiding (symbol, comma)
 import Grails.Types (EIO, Plugins)
 
 parse :: FilePath -> EIO Plugins
@@ -13,24 +15,27 @@ onlyPlugins = try plugins
               <|> return []
 
 plugins = do
-  symbol $ string "plugins"
+  symbol "plugins"
   dependenciesBlock
 
-dependenciesBlock = between (symbol braceL) (symbol braceR) (many dependency)
+dependenciesBlock = do
+  dss <- braces (many dependency)
+  return (concat dss)
 
 dependency = do
-  symbol scope
-  optional $ symbol parenL
-  d <- symbol depString
-  optional $ symbol parenR
-  optional $ symbol comma
+  lexeme scope
+  optional $ lexeme parenL
+  -- ugly
+  ds <- lexeme (depString <|> (depBlock >> return ("", ""))) `sepBy` comma
+  optional $ lexeme parenR
+  optional comma
   optional depBlock
 
-  return d
+  return (filter (not . null . fst) ds)
 
 depBlock = do
-  symbol braceL
-  manyTill anyChar (try (symbol braceR))
+  lexeme braceL
+  manyTill anyChar (try (lexeme braceR))
 
 depString = quoted depSpec
 
@@ -47,3 +52,9 @@ groupId    = identifier
 artifactId = identifier
 version    = identifier
 identifier = many1 (alphaNum <|> oneOf "_-.$")
+
+lexer  = T.makeTokenParser javaStyle
+symbol = T.symbol lexer
+lexeme = T.lexeme lexer
+braces = T.braces lexer
+comma  = T.comma  lexer
