@@ -7,13 +7,17 @@ import Grails.Types    (Plugins, Files(..), Project(..))
 
 printApp :: Project -> IO ()
 printApp (Project files plugins version grails appName) = do
-  putStrLn ("is_project " ++ lowerBool (isJust (pluginDesc files)))
+  putStrLn ("is_project true")
+  putStrLn ("is_plugin " ++ isPlugin ++ " " ++ desc)
   putStrLn ("version " ++ version)
   putStrLn ("grails "  ++ grails)
   putStrLn ("name "    ++ appName)
   putStrLn ("directory " ++ takeBaseName (root files))
   putStrLn ""
   printPlugins plugins
+  where
+    isPlugin = lowerBool . isJust . pluginDesc $ files
+    desc     = maybe "" id . pluginDesc $ files
 
 
 printPlugins :: Plugins -> IO ()
