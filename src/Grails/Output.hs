@@ -1,9 +1,9 @@
 module Grails.Output ( printApp ) where
 
-import Grails.Types (Plugins, App(..))
+import Grails.Types (Plugins, Project(..))
 
-printApp :: App -> IO ()
-printApp (App plugins version grails appName) = do
+printApp :: Project -> IO ()
+printApp (Project plugins version grails appName) = do
   putStrLn ("version " ++ version)
   putStrLn ("grails "  ++ grails)
   putStrLn ("name "    ++ appName)

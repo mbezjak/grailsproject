@@ -5,19 +5,19 @@ import System.Directory    (getDirectoryContents)
 import Control.Monad.Error (ErrorT(..), throwError)
 import Control.Applicative ((<|>))
 
-import Grails.Types        (EIO, Properties, Plugins, App(..))
+import Grails.Types        (EIO, Properties, Plugins, Project(..))
 import Grails.Parser.BuildConfig as BC
 import Grails.Parser.Properties  as PROP
 import Grails.Parser.PluginDesc  as PD
 
-detect :: EIO App
+detect :: EIO Project
 detect = do
   props   <- parseApplication
   plugins <- parseBuildConfig
   version <- lookupAppVersion props <|> parsePluginDesc
   grails  <- lookupGrailsVersion props
   appName <- lookupAppName props
-  return (App plugins version grails appName)
+  return (Project plugins version grails appName)
 
 
 parseBuildConfig :: EIO Plugins
