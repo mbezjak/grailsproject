@@ -10,7 +10,8 @@ type Properties = [(String,String)]
 
 data Files = Files { root        :: FilePath
                    , appProps    :: FilePath
-                   , buildConfig :: FilePath }
+                   , buildConfig :: FilePath
+                   , pluginDesc  :: Maybe FilePath }
            deriving Show
 
 data Project = Project { getPlugins       :: Plugins
