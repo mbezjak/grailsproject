@@ -14,7 +14,8 @@ data Files = Files { root        :: FilePath
                    , pluginDesc  :: Maybe FilePath }
            deriving Show
 
-data Project = Project { getPlugins       :: Plugins
+data Project = Project { getFiles         :: Files
+                       , getPlugins       :: Plugins
                        , getVersion       :: String
                        , getGrailsVersion :: String
                        , getAppName       :: String }

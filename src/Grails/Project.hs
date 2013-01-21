@@ -17,7 +17,7 @@ detect = do
   version <- detectVersion props (pluginDesc files)
   grails  <- lookupGrailsVersion props
   appName <- lookupAppName props
-  return (Project plugins version grails appName)
+  return (Project files plugins version grails appName)
 
 
 detectVersion :: Properties -> Maybe FilePath -> EIO String
