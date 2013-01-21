@@ -1,10 +1,13 @@
 module Grails.Output ( printApp ) where
 
+import Data.Maybe      (isJust)
+import Data.Char       (toLower)
 import System.FilePath (takeBaseName)
 import Grails.Types    (Plugins, Files(..), Project(..))
 
 printApp :: Project -> IO ()
 printApp (Project files plugins version grails appName) = do
+  putStrLn ("is_project " ++ lowerBool (isJust (pluginDesc files)))
   putStrLn ("version " ++ version)
   putStrLn ("grails "  ++ grails)
   putStrLn ("name "    ++ appName)
@@ -28,3 +31,6 @@ table xs = map join xs
     n = maximum . map (length . fst) $ xs
     pad s = s ++ replicate (n - length s) ' '
     join (l,r) = pad l ++ "  " ++ r
+
+lowerBool :: Bool -> String
+lowerBool = map toLower . show
