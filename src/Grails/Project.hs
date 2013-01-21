@@ -1,30 +1,32 @@
 module Grails.Project ( detect ) where
 
-import Data.List           (isSuffixOf)
-import System.Directory    (getDirectoryContents)
-import Control.Monad.Error (ErrorT(..), throwError)
-import Control.Applicative ((<|>))
+import Data.List             (isSuffixOf)
+import System.Directory      (getCurrentDirectory, getDirectoryContents)
+import System.FilePath.Posix ((</>))
+import Control.Monad.Error   (ErrorT(..), throwError, lift)
+import Control.Applicative   ((<|>))
 
-import Grails.Types        (EIO, Properties, Plugins, Project(..))
+import Grails.Types        (EIO, Properties, Plugins, Files(..), Project(..))
 import Grails.Parser.BuildConfig as BC
 import Grails.Parser.Properties  as PROP
 import Grails.Parser.PluginDesc  as PD
 
 detect :: EIO Project
 detect = do
-  props   <- parseApplication
-  plugins <- parseBuildConfig
+  files   <- projectFiles
+  props   <- parseApplication files
+  plugins <- parseBuildConfig files
   version <- lookupAppVersion props <|> parsePluginDesc
   grails  <- lookupGrailsVersion props
   appName <- lookupAppName props
   return (Project plugins version grails appName)
 
 
-parseBuildConfig :: EIO Plugins
-parseBuildConfig = BC.parse "grails-app/conf/BuildConfig.groovy"
+parseBuildConfig :: Files -> EIO Plugins
+parseBuildConfig = BC.parse . buildConfig
 
-parseApplication :: EIO Properties
-parseApplication = PROP.parse "application.properties"
+parseApplication :: Files -> EIO Properties
+parseApplication = PROP.parse . appProps
 
 parsePluginDesc :: EIO String
 parsePluginDesc = getPluginDesc "." >>= PD.parse
@@ -44,6 +46,14 @@ fromApplicationProperties key props =
   case lookup key props of
     Just x  -> return x
     Nothing -> throwError ("No key `" ++ key ++ "' in application.properties")
+
+projectFiles :: EIO Files
+projectFiles = do
+  cwd <- lift getCurrentDirectory
+  return (Files {
+    root        = cwd,
+    appProps    = cwd </> "application.properties",
+    buildConfig = cwd </> "grails-app" </> "conf" </> "BuildConfig.groovy" })
 
 getPluginDesc :: FilePath -> EIO FilePath
 getPluginDesc = ErrorT . fmap findPluginDesc . getDirectoryContents
