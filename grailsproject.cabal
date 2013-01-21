@@ -18,10 +18,10 @@ executable grailsproject
   main-is:           Main.hs
   build-depends:
     base <5,
-    mtl >2.0,
-    filepath ==1.3.*,
-    parsec ==3.1.*,
-    directory ==1.2.*
+    mtl,
+    filepath,
+    parsec,
+    directory
 
 test-suite test
   type:              exitcode-stdio-1.0
@@ -30,6 +30,7 @@ test-suite test
   build-depends:
     base,
     mtl,
+    filepath,
     parsec,
     directory,
     HUnit,
