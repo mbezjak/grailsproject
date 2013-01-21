@@ -12,9 +12,11 @@ import Grails.Parser.PluginDesc  as PD
 
 detect :: EIO App
 detect = do
+  props   <- parseApplication
   plugins <- parseBuildConfig
-  version <- (parseApplication >>= lookupAppVersion) <|> parsePluginDesc
-  return (App plugins version)
+  version <- lookupAppVersion props <|> parsePluginDesc
+  grails  <- lookupGrailsVersion props
+  return (App plugins version grails)
 
 
 parseBuildConfig :: EIO Plugins
@@ -32,6 +34,13 @@ lookupAppVersion props =
   case lookup "app.version" props of
     Just app -> return app
     Nothing  -> throwError "No version in properties"
+
+lookupGrailsVersion :: Properties -> EIO String
+lookupGrailsVersion props =
+  case lookup "app.grails.version" props of
+    Just ver -> return ver
+    Nothing  -> throwError "No grails version in properties"
+
 
 getPluginDesc :: FilePath -> EIO FilePath
 getPluginDesc = ErrorT . fmap findPluginDesc . getDirectoryContents

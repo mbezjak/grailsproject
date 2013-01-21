@@ -3,8 +3,10 @@ module Grails.Output ( printApp ) where
 import Grails.Types (Plugins, App(..))
 
 printApp :: App -> IO ()
-printApp (App plugins version) = do
+printApp (App plugins version grails) = do
   putStrLn ("version " ++ version)
+  putStrLn ("grails "  ++ grails)
+  putStrLn ""
   printPlugins plugins
 
 
