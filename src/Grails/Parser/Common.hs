@@ -2,6 +2,7 @@ module Grails.Parser.Common where
 
 import Text.ParserCombinators.Parsec
 import Control.Monad.Error (ErrorT(..))
+import Control.Monad       (void)
 import Grails.Types        (EIO)
 
 parseFile :: Parser a -> FilePath -> EIO a
@@ -22,10 +23,10 @@ quoted p = between singleQuote singleQuote p
             <|> between doubleQuote doubleQuote p
 
 eol         :: Parser ()
-eol         = (try (string "\r\n")
-              <|> try (string "\n\r")
-              <|> string "\n"
-              <|> string "\r") >> return ()
+eol         = void (try (string "\r\n")
+                    <|> try (string "\n\r")
+                    <|> string "\n"
+                    <|> string "\r")
 
 parenL      :: Parser Char
 parenL      = char '('

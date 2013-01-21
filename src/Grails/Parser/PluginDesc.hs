@@ -16,7 +16,7 @@ defVersion :: Parser String
 defVersion = do
   symbol $ string "def"
   symbol $ string "version"
-  symbol $ equal
+  symbol equal
   quoted version
 
 version :: Parser String
