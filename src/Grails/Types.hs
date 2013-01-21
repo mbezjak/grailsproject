@@ -9,4 +9,5 @@ type Properties = [(String,String)]
 
 data App = App { getPlugins       :: Plugins
                , getVersion       :: String
-               , getGrailsVersion :: String }
+               , getGrailsVersion :: String
+               , getAppName       :: String }
