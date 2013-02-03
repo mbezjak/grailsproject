@@ -18,4 +18,5 @@ data Project = Project { getFiles         :: Files
                        , getPlugins       :: Plugins
                        , getVersion       :: String
                        , getGrailsVersion :: String
-                       , getAppName       :: String }
+                       , getAppName       :: String
+                       , getWorkDir       :: FilePath }

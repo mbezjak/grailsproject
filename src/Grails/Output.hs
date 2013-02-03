@@ -6,13 +6,14 @@ import System.FilePath (takeBaseName)
 import Grails.Types    (Plugins, Files(..), Project(..))
 
 printApp :: Project -> IO ()
-printApp (Project files plugins version grails appName) = do
+printApp (Project files plugins version grails appName workDir) = do
   putStrLn ("is_project true")
   putStrLn ("is_plugin " ++ isPlugin ++ " " ++ desc)
   putStrLn ("version " ++ version)
   putStrLn ("grails "  ++ grails)
   putStrLn ("name "    ++ appName)
   putStrLn ("directory " ++ takeBaseName (root files))
+  putStrLn ("workdir " ++ workDir)
   putStrLn ""
   printPlugins plugins
   where
