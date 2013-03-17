@@ -1,12 +1,13 @@
 module Grails.Project ( detect ) where
 
+import Data.List             (isPrefixOf)
 import Control.Monad.Error   (throwError, lift)
 import Control.Applicative   ((<|>))
 import System.Directory      (getHomeDirectory)
 import System.FilePath       (takeBaseName)
 import System.FilePath.Posix ((</>))
 
-import Grails.Types          (EIO, Properties, Files(..), Project(..))
+import Grails.Types          (EIO, Properties, Plugins, Files(..), Project(..))
 import Grails.Files          (projectFiles)
 import Grails.Parser.BuildConfig as BC
 import Grails.Parser.Properties  as PROP
@@ -17,7 +18,8 @@ detect = do
   home    <- lift getHomeDirectory
   files   <- projectFiles
   props   <- PROP.parse (appProps files)
-  plugins <- BC.parse (buildConfig files)
+  pluginsBC <- BC.parse (buildConfig files)
+  let plugins = pluginsBC ++ lookupPlugins props
   version <- detectVersion props (pluginDesc files)
   grails  <- lookupGrailsVersion props
   appName <- lookupAppName props
@@ -37,6 +39,10 @@ lookupGrailsVersion = fromApplicationProperties "app.grails.version"
 
 lookupAppName :: Properties -> EIO String
 lookupAppName = fromApplicationProperties "app.name"
+
+lookupPlugins :: Properties -> Plugins
+lookupPlugins = map (\(k, v) -> (drop (length prefix) k, v)) . filter (isPrefixOf prefix . fst)
+  where prefix = "plugins."
 
 fromApplicationProperties :: String -> Properties -> EIO String
 fromApplicationProperties key props =
